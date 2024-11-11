@@ -1,16 +1,21 @@
-// app.js
+require('dotenv').config();
 const express = require('express');
-const dotenv = require('dotenv');
-const apiRoutes = require('./routes/apiRoutes');
-
-dotenv.config();
+const mahasiswaRoutes = require('./routes/mahasiswaRoutes');
+const matakuliahRoutes = require('./routes/matakuliahRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(express.json());
-app.use('/api', apiRoutes);
+// Root route
+app.get('/', (req, res) => {
+  res.send('Selamat Datang');
+});
 
+// Register routes
+app.use('/mahasiswa', mahasiswaRoutes);
+app.use('/matakuliah', matakuliahRoutes);
+
+// Start server
 app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+  console.log(`Server running on http://localhost:${PORT}`);
 });
