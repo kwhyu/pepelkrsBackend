@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 require('dotenv').config();
 const express = require('express');
 const mahasiswaRoutes = require('./routes/mahasiswaRoutes');
@@ -20,7 +19,6 @@ app.use('/matakuliah', matakuliahRoutes);
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
-=======
 require('dotenv').config();
 const express = require('express');
 const mahasiswaRoutes = require('./routes/mahasiswaRoutes');
@@ -42,4 +40,3 @@ app.use('/matakuliah', matakuliahRoutes);
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
->>>>>>> 5782afd9669fcbcb5058941b22c2cacc5d2a5e18
