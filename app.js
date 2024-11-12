@@ -1,10 +1,18 @@
 require('dotenv').config();
 const express = require('express');
+const cors = require('cors');
 const mahasiswaRoutes = require('./routes/mahasiswaRoutes');
 const matakuliahRoutes = require('./routes/matakuliahRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+// Middleware CORS
+app.use(cors({
+  origin: 'http://localhost:3000', // Ganti ini dengan URL frontend
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true
+}));
 
 // Root route
 app.get('/', (req, res) => {
