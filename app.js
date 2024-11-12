@@ -8,14 +8,14 @@ const app = express();
 const PORT = process.env.PORT || 8080;
 
 app.use(cors({
-  origin: 'http://localhost:8080', // Ganti ini dengan URL frontend
+  origin: 'http://pepelkrs-production.up.railway.app',
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true
 }));
 
 // Root route
 app.get('/', (req, res) => {
-  res.send('Selamat Datang');
+  res.send('Selamat Datang OIOIIOIOIOIOIOIOI');
 });
 
 // Register routes
@@ -24,5 +24,5 @@ app.use('/matakuliah', matakuliahRoutes);
 
 // Start server
 app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });
