@@ -55,13 +55,37 @@ exports.getAllMahasiswa = async (req, res) => {
 };
 
 // Mengambil KRS mahasiswa berdasarkan NIM dan menampilkan IPS per semester dan IPK dari tabel ips_ipk
+// exports.getMahasiswaKRS = async (req, res) => {
+//   const { nim } = req.params;
+//   try {
+//     // Mengambil data KRS mahasiswa
+//     const [krs] = await db.query(`
+//       SELECT tahun, semester, idMatakuliah, nilai, parameterNilai
+//       FROM krs WHERE nim = ?
+//     `, [nim]);
+
+//     // Mengambil IPS per semester dan IPK dari tabel ips_ipk
+//     const [ips_ipk] = await db.query(`
+//       SELECT semester, ips, ipk
+//       FROM ips_ipk WHERE nim = ?
+//       ORDER BY tahun, semester
+//     `, [nim]);
+
+//     res.json({ krs, ips_ipk });
+//   } catch (error) {
+//     res.status(500).json({ error: error.message });
+//   }
+// };
+
 exports.getMahasiswaKRS = async (req, res) => {
   const { nim } = req.params;
   try {
-    // Mengambil data KRS mahasiswa
+    // Mengambil data KRS mahasiswa dengan join ke tabel matakuliah untuk mendapatkan namaMatakuliah
     const [krs] = await db.query(`
-      SELECT tahun, semester, idMatakuliah, nilai, parameterNilai
-      FROM krs WHERE nim = ?
+      SELECT k.tahun, k.semester, k.idMatakuliah, m.namaMatakuliah, k.nilai, k.parameterNilai
+      FROM krs k
+      LEFT JOIN matakuliah m ON k.idMatakuliah = m.idMatakuliah
+      WHERE k.nim = ?
     `, [nim]);
 
     // Mengambil IPS per semester dan IPK dari tabel ips_ipk
