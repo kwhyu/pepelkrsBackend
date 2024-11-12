@@ -5,11 +5,10 @@ const mahasiswaRoutes = require('./routes/mahasiswaRoutes');
 const matakuliahRoutes = require('./routes/matakuliahRoutes');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 
-// Middleware CORS
 app.use(cors({
-  origin: 'http://localhost:3000', // Ganti ini dengan URL frontend
+  origin: 'http://localhost:8080', // Ganti ini dengan URL frontend
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true
 }));
