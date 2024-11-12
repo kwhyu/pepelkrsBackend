@@ -51,6 +51,3 @@ Setiap endpoint di bawah ini akan mengembalikan daftar mata kuliah yang diambil 
 
 - **`GET /matakuliah/semester/8`**
   - **Fungsi:** Mengambil daftar mata kuliah semester 8.
-
-**Cara Pakai untuk Semua Endpoint Mata Kuliah:**  
-Akses endpoint yang sesuai dengan semester yang diinginkan. Misalnya, untuk mendapatkan daftar mata kuliah semester 1, gunakan `GET /matakuliah/semester/1`.
