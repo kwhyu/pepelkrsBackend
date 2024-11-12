@@ -23,7 +23,7 @@
 //     `, [nim]);
 
 //     const [ips_ipk] = await db.query(`
-//       SELECT 
+//       SELECT
 //         AVG(CASE WHEN semester = 1 THEN nilai END) as ips1,
 //         AVG(CASE WHEN semester = 2 THEN nilai END) as ips2,
 //         AVG(nilai) as ipk
@@ -36,7 +36,7 @@
 //     res.status(500).json({ error: error.message });
 //   }
 // };
-const db = require('../config/db');
+const db = require("../config/db");
 
 // Mengambil semua data mahasiswa beserta IPK mereka dari tabel ips_ipk
 exports.getAllMahasiswa = async (req, res) => {
@@ -81,21 +81,40 @@ exports.getMahasiswaKRS = async (req, res) => {
   const { nim } = req.params;
   try {
     // Mengambil data KRS mahasiswa dengan join ke tabel matakuliah untuk mendapatkan namaMatakuliah
-    const [krs] = await db.query(`
+    const [krs] = await db.query(
+      `
       SELECT k.tahun, k.semester, k.idMatakuliah, m.namaMatakuliah, k.nilai, k.parameterNilai
       FROM krs k
       LEFT JOIN matakuliah m ON k.idMatakuliah = m.idMatakuliah
       WHERE k.nim = ?
-    `, [nim]);
+    `,
+      [nim]
+    );
 
     // Mengambil IPS per semester dan IPK dari tabel ips_ipk
-    const [ips_ipk] = await db.query(`
+    const [ips_ipk] = await db.query(
+      `
       SELECT semester, ips, ipk
       FROM ips_ipk WHERE nim = ?
       ORDER BY tahun, semester
-    `, [nim]);
+    `,
+      [nim]
+    );
 
-    res.json({ krs, ips_ipk });
+    const krsWithNullDefaults = krs.map((row) => ({
+      tahun: row.tahun || null,
+      semester: row.semester || null,
+      idMatakuliah: row.idMatakuliah || null,
+      namaMatakuliah: row.namaMatakuliah || null,
+      nilai: row.nilai || null,
+      parameterNilai: row.parameterNilai || null,
+    }));
+
+    const ipsIpkWithNullDefaults = ips_ipk.length
+      ? ips_ipk
+      : [{ semester: null, ips: null, ipk: null }];
+
+    res.json({ krs: krsWithNullDefaults, ips_ipk: ipsIpkWithNullDefaults });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
