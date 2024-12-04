@@ -15,5 +15,5 @@
     "mysql2": "^3.11.4"
   },
   "description": "",
-  "proxy": "https://pepelkrsbackend-production-7aff.up.railway.app"
+  "proxy": "https://pepelkrsbackend-production.up.railway.app"
 }
